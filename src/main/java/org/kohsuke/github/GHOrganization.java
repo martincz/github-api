@@ -38,6 +38,13 @@ public class GHOrganization extends GHPerson {
                 .with("public", isPublic).with("team_id",team.getId()).to("/orgs/"+login+"/repos", GHRepository.class).wrap(root);
     }
 
+    public GHRepository createRepository(String name, String description, String homepage, boolean isPublic) throws IOException {
+        // such API doesn't exist, so fall back to HTML scraping
+        return new Requester(root)
+                .with("name", name).with("description", description).with("homepage", homepage)
+                .with("public", isPublic).to("/orgs/"+login+"/repos", GHRepository.class).wrap(root);
+    }
+
     /**
      * Teams by their names.
      */
